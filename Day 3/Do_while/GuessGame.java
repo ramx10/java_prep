@@ -1,4 +1,5 @@
 package Do_while;
+
 import java.util.Scanner;
 
 public class GuessGame {

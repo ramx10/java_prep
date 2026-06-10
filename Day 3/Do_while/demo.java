@@ -1,4 +1,4 @@
-public class Demo {
+public class demo {
     static int Increment(int num) {
         num++;
         System.out.println(num);
