@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+
 import com.example.demo.entity.Customer;
 import com.example.demo.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,9 @@ public class CustomerService {
         return repository.save(customer);
     }
 
-    public Customer getCustomerById(Long Id){
-        return repository.findById(Id).orElse(null);
+    public Optional<Customer> getCustomerById(Long id){
+
+         return repository.findById(id);
     }
 
     public Customer getCustomerByEmail(String email){
@@ -37,6 +39,32 @@ public class CustomerService {
 
     public List<Customer> getCustomerByAge(int age){
         return repository.findByAgeGreaterThan(age);
+    }
+
+    public List<Customer> saveCustomerList(List<Customer> cust){
+        return repository.saveAll(cust);
+    }
+
+    public  Customer UpdateCustomer(Long id , Customer cust){
+        Customer ExistingCust=repository.findById(id).orElse(null);
+
+        if(ExistingCust !=null){
+            ExistingCust.setCustomerId(cust.getCustomerId());
+            ExistingCust.setName(cust.getName());
+            ExistingCust.setAge(cust.getAge());
+            ExistingCust.setEmail(cust.getEmail());
+            ExistingCust.setPassword(cust.getPassword());
+            ExistingCust.setBankUserName(cust.getBankUserName());
+            ExistingCust.setCity(cust.getCity());
+
+            return repository.save(ExistingCust);
+
+        }
+        return null;
+    }
+
+    public void deleteCustomer(Long Id){
+        repository.deleteById(Id);
     }
 
 
