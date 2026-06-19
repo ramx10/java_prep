@@ -24,31 +24,30 @@ public class OrderService {
 
 
     public Orders placeOrder(Long custId , Long ProdId , int qty){
-        Customer customer=custRepo.findById(custId).orElse(null);
 
-        if(customer!=null){
-            Product product=productRepo.findById(ProdId).orElse(null);
+        Customer customer = custRepo.findById(custId).orElse(null);
+        System.out.println("Customer = " + customer);
 
-            if(product!=null){
-                Orders order = new Orders();
-                order.setCustomer(customer);
-                order.setProduct(product);
-                order.setQuantityOrdered(qty);
+        Product product = productRepo.findById(ProdId).orElse(null);
+        System.out.println("Product = " + product);
 
-                order.setTotalPrice(product.getPrice()*qty);
+        if(customer != null && product != null){
 
-                return orderRepo.save(order);
-            }
+            Orders order = new Orders();
+            order.setCustomer(customer);
+            order.setProduct(product);
+            order.setQuantityOrdered(qty);
+            order.setTotalPrice(product.getPrice()*qty);
+
+            Orders savedOrder = orderRepo.save(order);
+
+            System.out.println("Saved Order = " + savedOrder);
+
+            return savedOrder;
         }
+
+        System.out.println("Customer or Product not found");
+
         return null;
     }
-
-
-    public List<Orders> getAllOrders(){
-        return  orderRepo.findAll();
-    }
-
-
-
-
 }
